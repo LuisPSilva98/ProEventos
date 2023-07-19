@@ -1,7 +1,58 @@
-<h3>Eventos do Components</h3>
+<h2 class="mt-5">Eventos</h2>
+<hr>
 
-<div *ngFor="let evento of eventos">
-    <p><strong>Tema: </strong>{{evento.tema}}</p>
-    <p><strong>Local: </strong>{{evento.local}}</p>
-    <hr>
+<div class="form-inline">
+    <div class="input-group mb-2">
+        <input 
+        [(ngModel)]="filterEvent"
+        type="text" 
+        class="form-control mr-2" 
+        placeholder="Buscar">
+    </div>
 </div>
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>
+                <button type="button" class="btn btn-secondary btn-sm"
+                (click)="showImage()">
+                {{this.exibirImagem? "Exibir" : "Ocultar"}}
+            </button>
+            </th>
+            <th>Tema</th>
+            <th>Local</th>
+            <th>Data</th>
+            <th>Qtd Pessoas</th>
+            <th>Lote</th>
+            <th>Opções</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider" *ngIf="eventos && eventos.length">
+        <tr *ngFor="let evento of eventosFiltratos">
+            <td>{{evento.eventoId}}</td>
+            <td >
+                <img [collapse]="exibirImagem"
+                [isAnimated]="true" src="/assets/{{evento.imageURL}}" alt="Imagem Evento"
+                [style.width.px]="80"
+                [style.height.px]="50">
+            </td>
+            <td>{{evento.tema}}</td>
+            <td>{{evento.local}}</td>
+            <td>{{evento.dataEvento }}</td>
+            <td>{{evento.qtdPessoas}}</td>
+            <td>{{evento.lote}}</td>
+            <td>
+                <button type="button" [style.margin-right.px]="15" class="btn btn-primary btn-sm">Editar</button>
+                <button type="button" class="btn btn-danger btn-sm">Excluir</button>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot *ngIf="!eventosFiltratos.length">
+        <tr>
+            <td colspan="8" class="text-center">
+                <h3>Nenhum Evento Encontrado!</h3>
+            </td> 
+        </tr>
+    </tfoot>
+</table>

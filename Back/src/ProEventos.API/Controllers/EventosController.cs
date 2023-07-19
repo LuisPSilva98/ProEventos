@@ -32,6 +32,14 @@ namespace ProEventos.API.Controllers
             return _context.Eventos.FirstOrDefault(Evento => Evento.EventoId == id);
         }
 
+        [HttpPut("{id}")]
+        public void UpdateById(int id)
+        {
+            var evento = _context.Eventos.FirstOrDefault(Evento => Evento.EventoId == id);
+            if(evento is not null){
+                _context.Eventos.Update(evento);
+            }
+        }
 
     }
 }
